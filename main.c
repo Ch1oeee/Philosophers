@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:53:17 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/17 14:19:57 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:21:50 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,26 @@ int	main(int ac, char **av)
 		printf("Numbers should be above 0\n");
 		return (1);
 	}
+	// create_threads(&prog);
 	return (0);
 }
 
-int	routine(t_prog *prog)
+int	create_threads(t_prog *prog)
 {
-	prog->start_time = get_time();
+	
 }
+
+// int	routine(t_prog *prog)
+// {
+// 	prog->start_time = get_time();
+// }
+
+////// 		TO DO LIST		 /////
+
+//un thread to monitor if anybody died like a loser
+// creer les thread (un par philo i think)
+
+
 
 
 
