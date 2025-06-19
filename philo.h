@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:50:24 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/17 14:19:30 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/06/19 11:47:28 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ typedef struct s_philo
 	int				time_to_sleep;
 	int				num_of_meals; // optional
 	int				meals_eaten;
+	long			last_meal;
 	pthread_mutex_t	*left_fork_mutex;
 	pthread_mutex_t	*right_fork_mutex;
-	struct t_prog	*prog;
+	t_prog			*prog;
 }					t_philo;
 
 typedef struct s_prog
 {
+	pthread_t		monitor_thread;
 	long			start_time;
 	bool			dead;
 	int				num_of_philos;
@@ -62,6 +64,9 @@ int		check_args(int ac, char **av);
 int		init_mutex(t_prog *prog);
 
 long	get_time(void);
+int		check_death(t_prog *prog, int i);
+void	*monitor(void *arg);
+int		create_threads(t_prog *prog);
 
 
 #endif
