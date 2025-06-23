@@ -6,6 +6,8 @@ RM = rm -rf
 SRCS	=	main.c\
 			srcs/utils.c\
 			srcs/init.c\
+			srcs/routine.c\
+			srcs/monitor.c\
 
 GREEN = \033[38;5;114m
 ROSE = \033[38;5;218m

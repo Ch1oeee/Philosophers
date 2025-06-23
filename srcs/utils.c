@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:28:26 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/23 14:55:42 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:07:25 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ int	check_input(char **av)
 {
 	int	i;
 	int	j;
-	
+
 	i = 1;
 	while (av[i])
 	{
 		j = 0;
-		while(av[i][j])
+		while (av[i][j])
 		{
-			if(av[i][j] == ' ')
+			if (av[i][j] == ' ')
 			{
 				j++;
-				continue;
+				continue ;
 			}
-			if(av[i][j] < 48 || av[i][j] > 57)
+			if (av[i][j] < 48 || av[i][j] > 57)
 				return (1);
 			j++;
 		}
@@ -64,29 +64,32 @@ int	ft_atoi(char *str)
 
 long	get_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
+
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + tv.tv_usec / 1000);
 }
 
-int is_dead(t_prog *prog)
+int	is_dead(t_prog *prog)
 {
-    int dead;
-    
-    pthread_mutex_lock(&prog->dead_mutex);
-    dead = prog->dead;
-    pthread_mutex_unlock(&prog->dead_mutex);
-    return (dead);
+	int	dead;
+
+	pthread_mutex_lock(&prog->dead_mutex);
+	dead = prog->dead;
+	pthread_mutex_unlock(&prog->dead_mutex);
+	return (dead);
 }
 
-void safe_usleep(int duration_ms, t_prog *prog)
+void	safe_usleep(int duration_ms, t_prog *prog)
 {
-    int elapsed = 0;
-    int step = 10;
-    
-    while (elapsed < duration_ms && !is_dead(prog))
-    {
-        usleep(step * 1000);
-        elapsed += step;
-    }
+	int	elapsed;
+	int	step;
+
+	elapsed = 0;
+	step = 10;
+	while (elapsed < duration_ms && !is_dead(prog))
+	{
+		usleep(step * 1000);
+		elapsed += step;
+	}
 }

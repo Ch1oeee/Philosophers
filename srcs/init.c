@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 10:43:22 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/23 14:46:53 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:05:41 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	init_struct(t_prog *prog, int ac, char **av)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (check_args(ac, av))
 		return (1);
@@ -25,7 +25,7 @@ int	init_struct(t_prog *prog, int ac, char **av)
 		return (1);
 	if (init_mutex(prog))
 		return (1);
-	while(i < prog->num_of_philos)
+	while (i < prog->num_of_philos)
 	{
 		init_philo(prog, i, ac, av);
 		i++;
@@ -35,8 +35,8 @@ int	init_struct(t_prog *prog, int ac, char **av)
 
 int	check_args(int ac, char **av)
 {
-	if (ft_atoi(av[1]) <= 0 || ft_atoi(av[2]) <= 0 || 
-		ft_atoi(av[3]) <= 0 || ft_atoi(av[4]) <= 0)
+	if (ft_atoi(av[1]) <= 0 || ft_atoi(av[2]) <= 0
+		|| ft_atoi(av[3]) <= 0 || ft_atoi(av[4]) <= 0)
 		return (1);
 	if (ac == 6 && ft_atoi(av[5]) <= 0)
 		return (1);
@@ -79,10 +79,9 @@ int	init_mutex(t_prog *prog)
 
 void	init_philo(t_prog *prog, int index, int ac, char **av)
 {
-	t_philo *philo;
-	
+	t_philo	*philo;
+
 	philo = &prog->philo[index];
-	
 	philo->index = index;
 	philo->num_of_philos = prog->num_of_philos;
 	philo->time_to_die = ft_atoi(av[2]);
@@ -95,7 +94,6 @@ void	init_philo(t_prog *prog, int index, int ac, char **av)
 	philo->left_fork_mutex = &prog->forks[index];
 	philo->right_fork_mutex = &prog->forks[(index + 1)
 		% philo->num_of_philos];
-	// prog->start_time = get_time();
 	philo->last_meal = get_time();
 	philo->meals_eaten = 0;
 	philo->prog = prog;
