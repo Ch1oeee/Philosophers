@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 10:43:22 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/18 09:20:01 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:46:53 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	init_mutex(t_prog *prog)
 		return (1);
 	if (pthread_mutex_init(&prog->eat_mutex, NULL) != 0)
 		return (1);
+	if (pthread_mutex_init(&prog->print_mutex, NULL) != 0)
+		return (1);
 	while (i < prog->num_of_philos)
 	{
 		if (pthread_mutex_init(&prog->forks[i], NULL) != 0)
@@ -93,4 +95,8 @@ void	init_philo(t_prog *prog, int index, int ac, char **av)
 	philo->left_fork_mutex = &prog->forks[index];
 	philo->right_fork_mutex = &prog->forks[(index + 1)
 		% philo->num_of_philos];
+	// prog->start_time = get_time();
+	philo->last_meal = get_time();
+	philo->meals_eaten = 0;
+	philo->prog = prog;
 }

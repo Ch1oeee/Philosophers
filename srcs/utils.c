@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:28:26 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/19 11:38:18 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:55:42 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,24 @@ long	get_time(void)
 	return ((tv.tv_sec * 1000) + tv.tv_usec / 1000);
 }
 
-int	ft_usleep(__useconds_t ms)
+int is_dead(t_prog *prog)
 {
-	long	time;
+    int dead;
+    
+    pthread_mutex_lock(&prog->dead_mutex);
+    dead = prog->dead;
+    pthread_mutex_unlock(&prog->dead_mutex);
+    return (dead);
+}
 
-	time = get_time();
-	while ((get_time() - time) < ms)
-		usleep(ms / 10);
-	return (0);
+void safe_usleep(int duration_ms, t_prog *prog)
+{
+    int elapsed = 0;
+    int step = 10;
+    
+    while (elapsed < duration_ms && !is_dead(prog))
+    {
+        usleep(step * 1000);
+        elapsed += step;
+    }
 }

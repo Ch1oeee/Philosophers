@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:50:24 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/19 11:47:28 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:56:01 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include <string.h>
 #include <unistd.h>
 
+struct s_prog;
+
 typedef struct s_philo
 {
 	pthread_t		thread;
@@ -34,7 +36,7 @@ typedef struct s_philo
 	long			last_meal;
 	pthread_mutex_t	*left_fork_mutex;
 	pthread_mutex_t	*right_fork_mutex;
-	t_prog			*prog;
+	struct s_prog	*prog;
 }					t_philo;
 
 typedef struct s_prog
@@ -67,6 +69,11 @@ long	get_time(void);
 int		check_death(t_prog *prog, int i);
 void	*monitor(void *arg);
 int		create_threads(t_prog *prog);
-
+void	safe_usleep(int duration_ms, t_prog *prog);
+void	*routine_philo(void *arg);
+void	print_states(t_philo *philo, const char *state);
+void	free_all(t_prog *prog);
+int		is_dead(t_prog *prog);
+int		take_fork(t_philo *philo);
 
 #endif
