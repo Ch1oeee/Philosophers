@@ -80,16 +80,30 @@ int	is_dead(t_prog *prog)
 	return (dead);
 }
 
-void	safe_usleep(int duration_ms, t_prog *prog)
-{
-	int	elapsed;
-	int	step;
+// void	safe_usleep(int duration_ms, t_prog *prog)
+// {
+// 	int	elapsed;
+// 	int	step;
 
-	elapsed = 0;
-	step = 10;
-	while (elapsed < duration_ms && !is_dead(prog))
+// 	elapsed = 0;
+// 	step = 10;
+// 	while (elapsed < duration_ms && !is_dead(prog))
+// 	{
+// 		usleep(step * 1000);
+// 		elapsed += step;
+// 	}
+// }
+
+void safe_usleep(long duration, t_prog *prog)
+{
+	long start;
+
+	start = get_time();
+	while (!is_dead(prog))
 	{
-		usleep(step * 1000);
-		elapsed += step;
+		if (get_time() - start >= duration)
+			break;
+		usleep(500);
 	}
 }
+

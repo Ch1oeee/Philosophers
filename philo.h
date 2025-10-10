@@ -36,6 +36,8 @@ typedef struct s_philo
 	long			last_meal;
 	pthread_mutex_t	*left_fork_mutex;
 	pthread_mutex_t	*right_fork_mutex;
+	int				has_left;
+	int				has_right;
 	struct s_prog	*prog;
 }					t_philo;
 
@@ -69,7 +71,9 @@ long	get_time(void);
 int		check_death(t_prog *prog, int i);
 void	*monitor(void *arg);
 int		create_threads(t_prog *prog);
-void	safe_usleep(int duration_ms, t_prog *prog);
+// void	safe_usleep(int duration_ms, t_prog *prog);
+void safe_usleep(long duration, t_prog *prog);
+
 void	*routine_philo(void *arg);
 void	print_states(t_philo *philo, const char *state);
 void	free_all(t_prog *prog);
@@ -79,5 +83,6 @@ void	eating(t_philo *philo);
 int		fork_pair(t_philo *philo);
 int		fork_odd(t_philo *philo);
 int		check_philos(t_prog *prog, int *full);
+void	release_forks(t_philo *philo);
 
 #endif

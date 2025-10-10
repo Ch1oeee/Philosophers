@@ -44,8 +44,14 @@ int	create_threads(t_prog *prog)
 {
 	int	i;
 
-	i = 0;
 	prog->start_time = get_time();
+	i = 0;
+	while (i < prog->num_of_philos)
+	{
+		prog->philo[i].last_meal = prog->start_time;
+		i++;
+	}
+	i = 0;
 	while (i < prog->num_of_philos)
 	{
 		if (pthread_create(&prog->philo[i].thread, NULL, routine_philo,
@@ -73,7 +79,7 @@ void	print_states(t_philo *philo, const char *state)
 	long	time;
 
 	pthread_mutex_lock(&philo->prog->print_mutex);
-	if (!philo->prog->dead)
+	if (!is_dead(philo->prog))
 	{
 		time = get_time() - philo->prog->start_time;
 		printf("%ld %d %s\n", time, philo->index + 1, state);
@@ -93,6 +99,7 @@ void	free_all(t_prog *prog)
 	}
 	pthread_mutex_destroy(&prog->dead_mutex);
 	pthread_mutex_destroy(&prog->eat_mutex);
+	pthread_mutex_destroy(&prog->print_mutex);
 	free(prog->forks);
 	free(prog->philo);
 }

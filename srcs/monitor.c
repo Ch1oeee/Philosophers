@@ -12,24 +12,49 @@
 
 #include "../philo.h"
 
-int	check_death(t_prog *prog, int i)
+// int	check_death(t_prog *prog, int i)
+// {
+// 	pthread_mutex_lock(&prog->eat_mutex);
+// 	if ((get_time() - prog->philo[i].last_meal) > prog->philo[i].time_to_die)
+// 	{
+// 		pthread_mutex_lock(&prog->print_mutex);
+// 		printf("%ld %d died\n", get_time() - prog->start_time,
+// 			prog->philo[i].index + 1);
+// 		pthread_mutex_unlock(&prog->print_mutex);
+// 		pthread_mutex_lock(&prog->dead_mutex);
+// 		prog->dead = true;
+// 		pthread_mutex_unlock(&prog->dead_mutex);
+// 		pthread_mutex_unlock(&prog->eat_mutex);
+// 		return (1);
+// 	}
+// 	pthread_mutex_unlock(&prog->eat_mutex);
+// 	return (0);
+// }
+
+int check_death(t_prog *prog, int i)
 {
-	pthread_mutex_lock(&prog->eat_mutex);
-	if ((get_time() - prog->philo[i].last_meal) > prog->philo[i].time_to_die)
-	{
-		pthread_mutex_lock(&prog->print_mutex);
-		printf("%ld %d died\n", get_time() - prog->start_time,
-			prog->philo[i].index + 1);
-		pthread_mutex_unlock(&prog->print_mutex);
-		pthread_mutex_lock(&prog->dead_mutex);
-		prog->dead = true;
-		pthread_mutex_unlock(&prog->dead_mutex);
-		pthread_mutex_unlock(&prog->eat_mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(&prog->eat_mutex);
-	return (0);
+    long now;
+
+    pthread_mutex_lock(&prog->eat_mutex);
+    now = get_time();
+    if (now - prog->philo[i].last_meal >= prog->philo[i].time_to_die + 1)
+    {
+        pthread_mutex_lock(&prog->print_mutex);
+        printf("%ld %d died\n", now - prog->start_time,
+            prog->philo[i].index + 1);
+        pthread_mutex_unlock(&prog->print_mutex);
+
+        pthread_mutex_lock(&prog->dead_mutex);
+        prog->dead = true;
+        pthread_mutex_unlock(&prog->dead_mutex);
+
+        pthread_mutex_unlock(&prog->eat_mutex);
+        return (1);
+    }
+    pthread_mutex_unlock(&prog->eat_mutex);
+    return (0);
 }
+
 
 void	*monitor(void *arg)
 {
@@ -73,3 +98,5 @@ int	check_philos(t_prog *prog, int *full)
 	}
 	return (0);
 }
+
+
