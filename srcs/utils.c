@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:28:26 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/10/13 13:04:24 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:23:58 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,6 @@ void	safe_usleep(long duration, t_prog *prog)
 	{
 		if (get_time() - start >= duration)
 			break ;
-		usleep(500);
+		usleep(100);
 	}
 }

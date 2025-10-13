@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:01:42 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/10/13 12:54:18 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:29:36 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 int	check_death(t_prog *prog, int i)
 {
 	long	now;
-	long	ttd;
 
 	pthread_mutex_lock(&prog->eat_mutex);
 	now = get_time();
-	ttd = (long)prog->philo[i].time_to_die;
-	if (now - prog->philo[i].last_meal >= ttd + 1L)
+	if (now - prog->philo[i].last_meal >= prog->philo[i].time_to_die)
 	{
 		pthread_mutex_lock(&prog->print_mutex);
 		printf("%ld %d died\n", now - prog->start_time,
