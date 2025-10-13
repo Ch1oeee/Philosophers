@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 10:43:22 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/23 17:05:41 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:53:35 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	init_philo(t_prog *prog, int index, int ac, char **av)
 	philo->left_fork_mutex = &prog->forks[index];
 	philo->right_fork_mutex = &prog->forks[(index + 1)
 		% philo->num_of_philos];
-	// philo->last_meal = get_time();
 	philo->meals_eaten = 0;
 	philo->prog = prog;
 	philo->has_left = 0;

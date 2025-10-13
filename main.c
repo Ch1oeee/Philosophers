@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 18:53:17 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/23 17:09:03 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:52:15 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,23 @@ int	create_threads(t_prog *prog)
 	int	i;
 
 	prog->start_time = get_time();
-	i = 0;
-	while (i < prog->num_of_philos)
-	{
+	i = -1;
+	while (++i < prog->num_of_philos)
 		prog->philo[i].last_meal = prog->start_time;
-		i++;
-	}
-	i = 0;
-	while (i < prog->num_of_philos)
+	i = -1;
+	while (++i < prog->num_of_philos)
 	{
 		if (pthread_create(&prog->philo[i].thread, NULL, routine_philo,
 				&prog->philo[i]) != 0)
 			return (1);
 		usleep(100);
-		i++;
 	}
 	if (pthread_create(&prog->monitor_thread, NULL, monitor, prog) != 0)
 		return (1);
-	i = 0;
-	while (i < prog->num_of_philos)
-	{
+	i = -1;
+	while (++i < prog->num_of_philos)
 		if (pthread_join(prog->philo[i].thread, NULL) != 0)
 			return (1);
-		i++;
-	}
 	if (pthread_join(prog->monitor_thread, NULL) != 0)
 		return (1);
 	return (0);

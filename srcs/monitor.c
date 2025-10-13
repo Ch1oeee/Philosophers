@@ -6,55 +6,35 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 16:01:42 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/23 17:11:55 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:54:18 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-// int	check_death(t_prog *prog, int i)
-// {
-// 	pthread_mutex_lock(&prog->eat_mutex);
-// 	if ((get_time() - prog->philo[i].last_meal) > prog->philo[i].time_to_die)
-// 	{
-// 		pthread_mutex_lock(&prog->print_mutex);
-// 		printf("%ld %d died\n", get_time() - prog->start_time,
-// 			prog->philo[i].index + 1);
-// 		pthread_mutex_unlock(&prog->print_mutex);
-// 		pthread_mutex_lock(&prog->dead_mutex);
-// 		prog->dead = true;
-// 		pthread_mutex_unlock(&prog->dead_mutex);
-// 		pthread_mutex_unlock(&prog->eat_mutex);
-// 		return (1);
-// 	}
-// 	pthread_mutex_unlock(&prog->eat_mutex);
-// 	return (0);
-// }
-
-int check_death(t_prog *prog, int i)
+int	check_death(t_prog *prog, int i)
 {
-    long now;
+	long	now;
+	long	ttd;
 
-    pthread_mutex_lock(&prog->eat_mutex);
-    now = get_time();
-    if (now - prog->philo[i].last_meal >= prog->philo[i].time_to_die + 1)
-    {
-        pthread_mutex_lock(&prog->print_mutex);
-        printf("%ld %d died\n", now - prog->start_time,
-            prog->philo[i].index + 1);
-        pthread_mutex_unlock(&prog->print_mutex);
-
-        pthread_mutex_lock(&prog->dead_mutex);
-        prog->dead = true;
-        pthread_mutex_unlock(&prog->dead_mutex);
-
-        pthread_mutex_unlock(&prog->eat_mutex);
-        return (1);
-    }
-    pthread_mutex_unlock(&prog->eat_mutex);
-    return (0);
+	pthread_mutex_lock(&prog->eat_mutex);
+	now = get_time();
+	ttd = (long)prog->philo[i].time_to_die;
+	if (now - prog->philo[i].last_meal >= ttd + 1L)
+	{
+		pthread_mutex_lock(&prog->print_mutex);
+		printf("%ld %d died\n", now - prog->start_time,
+			prog->philo[i].index + 1);
+		pthread_mutex_unlock(&prog->print_mutex);
+		pthread_mutex_lock(&prog->dead_mutex);
+		prog->dead = true;
+		pthread_mutex_unlock(&prog->dead_mutex);
+		pthread_mutex_unlock(&prog->eat_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&prog->eat_mutex);
+	return (0);
 }
-
 
 void	*monitor(void *arg)
 {
@@ -98,5 +78,3 @@ int	check_philos(t_prog *prog, int *full)
 	}
 	return (0);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: cmontaig <cmontaig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 17:28:26 by cmontaig          #+#    #+#             */
-/*   Updated: 2025/06/23 17:07:25 by cmontaig         ###   ########.fr       */
+/*   Updated: 2025/10/13 13:04:24 by cmontaig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,15 @@ int	is_dead(t_prog *prog)
 	return (dead);
 }
 
-// void	safe_usleep(int duration_ms, t_prog *prog)
-// {
-// 	int	elapsed;
-// 	int	step;
-
-// 	elapsed = 0;
-// 	step = 10;
-// 	while (elapsed < duration_ms && !is_dead(prog))
-// 	{
-// 		usleep(step * 1000);
-// 		elapsed += step;
-// 	}
-// }
-
-void safe_usleep(long duration, t_prog *prog)
+void	safe_usleep(long duration, t_prog *prog)
 {
-	long start;
+	long	start;
 
 	start = get_time();
 	while (!is_dead(prog))
 	{
 		if (get_time() - start >= duration)
-			break;
+			break ;
 		usleep(500);
 	}
 }
-
